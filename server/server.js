@@ -9,8 +9,15 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors());
+// CORS setup to allow only the deployed frontend
+const allowedOrigins = [
+  'https://job-letter-pdf-generator-1.onrender.com',
+];
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
