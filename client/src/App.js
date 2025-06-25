@@ -3,6 +3,8 @@ import axios from 'axios';
 import jsPDF from 'jspdf';
 import './App.css';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function App() {
   const [formData, setFormData] = useState({
     date: '',
@@ -25,7 +27,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/submit', formData);
+      const res = await axios.post(`${API_URL}/submit`, formData);
       setApplicationId(res.data.application._id);
       setSubmitted(true);
       alert('Job offer letter submitted successfully!');
@@ -121,7 +123,7 @@ Please find below the terms and conditions of your employment:`;
     uploadData.append('applicationId', applicationId);
 
     try {
-      const res = await axios.post('http://localhost:5000/upload-pdf', uploadData, {
+      const res = await axios.post(`${API_URL}/upload-pdf`, uploadData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
